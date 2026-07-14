@@ -1,30 +1,33 @@
-# 🔮 Task 2: Telco Customer Churn Prediction Pipeline
+# Task 3: Multimodal Machine Learning – Housing Price Prediction Using Images + Tabular Data
 
-An end-to-end professional Machine Learning production pipeline built using **Scikit-learn** for data processing/modeling and **Streamlit** for the interactive user interface. This project was developed as part of the Phase 2 tasks for the DevelopersHub Corporation Virtual Learning Program.
-
----
-
-## 🚀 Project Overview
-Customer churn is one of the most vital metrics for any subscription-based enterprise. This project automates the workflow of reading raw subscriber profiles, performing robust scaling and dynamic one-hot categorical encoding via Scikit-learn's `ColumnTransformer`, optimizing hyperparameters utilizing a stratified 3-Fold grid search (`GridSearchCV`), and serving the top-performing pipeline artifact directly inside a highly intuitive web layout.
-
-### Key Highlights
-- **Automated Data Intake**: Dynamic dataset ingestion from IBM's official Telco data storage with fallback to automated local CSV caching.
-- **Robust Feature Engineering**: Pipeline architectures featuring `SimpleImputer` (median/most-frequent strategies), `StandardScaler`, and `OneHotEncoder(handle_unknown='ignore')` wrapped into a clean unified block.
-- **Model Tuning Stack**: Parallel grid search evaluation over multiple classifier backends including **Logistic Regression** and **Random Forest Classifiers**.
-- **Bulletproof Serialized Deployment**: Dynamic absolute path loading configuration inside the web framework ensuring seamless operation across directory structures.
+An advanced Deep Learning system designed to predict housing prices by simultaneously processing and fusing multi-modal data: **tabular features** (numerical/structural) and **house images** (visual patterns) using a hybrid **Convolutional Neural Network (CNN)** and **Dense Neural Network (MLP)** architecture.
 
 ---
 
-## 📁 Repository Directory Architecture
+## 🏗️ System Architecture & Feature Fusion
+
+The core strength of this system is its **Feature Fusion Architecture**. Instead of relying on a single data source, the network extracts intelligence from two distinct branches before making a regression prediction:
+
+1. **Tabular Branch (Dense MLP):** Processes structural properties (number of rooms, bathrooms, total area in sqft, and age of the house) through dense fully-connected layers to extract statistical patterns.
+2. **Visual Branch (CNN):** Processes visual properties of the house using Conv2D layers and Max-Pooling blocks to capture spatial representations, geometry, and structural colors.
+3. **Fusion Head:** Merges outputs from both branches using a `Concatenate` layer, passing the combined feature maps to a final regression network to output the estimated house price.
+
+---
+
+## 📁 Repository Structure
+
 ```text
-Task 2 - Customer Churn/
+Task 3 - Multimodal ML/
 │
-├── data/
-│   └── Telco-Customer-Churn.csv         # Automatically cached local data repository
+├── data/                       # Dataset directory
+│   ├── house_images/           # Generated house visual schemas (.jpg format)
+│   └── housing_data.csv        # Tabular features (rooms, area, prices, etc.)
 │
-├── saved_pipeline/
-│   └── customer_churn_pipeline.joblib   # Highly-optimized production pipeline weights
+├── saved_model/                # Model artifacts storage
+│   ├── multimodal_house_model.h5  # Trained hybrid Keras model
+│   ├── scaler_mean.npy         # StandardScaler mean values for deployment
+│   └── scaler_var.npy          # StandardScaler variance values for deployment
 │
-├── task2_pipeline.py                    # Complete core training, grid tuning, and export backend script
-├── app.py                               # Live responsive Streamlit web layout framework
-└── README.md                            # Comprehensive execution documentation manual
+├── generate_data.py            # Automatic synthetic dataset & image generator
+├── train_multimodal.py         # Multi-input model design, training & evaluation pipeline
+└── app.py                      # Interactive Streamlit Web UI Application
